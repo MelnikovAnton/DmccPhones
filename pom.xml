@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.stepintegrator</groupId>
+    <artifactId>dmccPhones</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <local.repository>C:\localrep</local.repository>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>local-repo</id>
+            <url>file://${local.repository}</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>api</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>avaya-castor-override</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>avaya-common</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>castor-1.0-xml</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>client-media-stack</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>jakarta-regexp-1.1</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>proxy</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.avaya.dmcc</groupId>
+            <artifactId>xerces-J_2.9.1</artifactId>
+            <version>6.3.3.0.107</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeScope>system</excludeScope>
+                            <excludes>META-INF/*.SF</excludes>
+                            <excludes>META-INF/*.DSA</excludes>
+                            <excludes>META-INF/*.RSA</excludes>
+                            <excludeGroupIds>com,ch</excludeGroupIds>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>my-maven-assembly-plugin</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>${project.name}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>ru.stepintegrator.dmccPhone.DMCC</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

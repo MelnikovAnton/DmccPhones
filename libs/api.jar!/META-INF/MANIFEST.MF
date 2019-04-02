@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: api.jar avaya-castor-override.jar castor-1.0-xml.jar avaya
+ -common.jar csta.jar csta-avaya.jar
+
